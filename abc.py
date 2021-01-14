@@ -1,6 +1,8 @@
 import numpy as np
 import random as rnd
 
+from functions import check
+
 # Create board
 
 board_0 = np.zeros((5,5))
@@ -20,22 +22,7 @@ board_1 = np.array([[2, 4, 0, 3, 1],
 print(board_1)
 
 
-# Function that checks whether the given board satisfies the rules or not. 
-# Rules: 
-# There are three carachters 'a', 'b', 'c' (repeated exactly once) per row and per column (the other 2 are empty)
-# I'm going to use 1, 2, 3 instead of 'a', 'b', 'c', because it's easier. The empty slots will be 0s. 
 
-def check(board):
-	count = 0
-	for r in range(board.shape[0]):
-		count = count + (sum(np.sort(board[r,:]) - [0, 1, 2, 3, 4]))**2
-	for c in range(board.shape[1]):
-		count = count + (sum(np.sort(board[c,:]) - [0, 1, 2, 3, 4]))**2
-	if count == 0:
-		res = True
-	else:
-		res = False
-	return res
 
 #--------------------------------------------------------
 
