@@ -1,50 +1,55 @@
-# Here I can experiment with new code
-# before changing the other files
-
-import numpy as np 
-import random as rnd
-
-import functions as fn
+from tkinter import *
+from functions import *
 
 
-#  New
-def create_pool(n, row_elem, column_elem, check_board, board):
-	col = board[row_elem, check_board[row_elem, :]]
-	row = board[check_board[:, column_elem], column_elem]
-	pool = [x for x in range(n) if (x not in col and x not in row)]
-	return pool
+# key down function
+def click():
+	entered_text=textentry.get() # this will collect the text from the textentry box
+	output.delete(0.0, END)
+	try:
+		answer = my_dictionary[entered_text]
+	except:
+		answer = "Sorry my friend. This is not a valid answer. Try again."
+	output.insert(END, answer)	
+
+# Exit function
+def close_window():
+	window.destroy() # destroy window
+	exit() # exit the programdata scientist
 
 
-# Fill the upper left triangle
-def fill(n):
-	new_board = np.zeros([n, n]).astype(int)
-	# Initialize the matrix check_board to keep
-	# track of the entries that have been added
-	check_board = np.zeros([n, n]).astype(bool)
-	for r in range(n):
-		for c in range(n):
-			pool = create_pool(n, r, c, check_board, new_board)
-			if pool == []:    # If there is nothing to choose it means that we made a mistake on an earlier step
-				break
-			elem = rnd.choice(pool)
-			new_board[r,c] = elem
-			check_board[r, c] = True
-
-	return new_board
-
-n = 5
-board = np.zeros([n,n]).astype(int)
-while fn.check(board) == False:
-	board = fill(5)
 
 
-print(board)
 
-# Now we have to solve the rest of the square
+# Create window
+window = Tk()
+# Assign title to window
+window.title("My first GUI desktop app")
+# Set  the min size
+#window.minsize(500,500)
+# Set the color of the background to  be black
+window.configure(background="black")
 
-def score(n, row_elem, column_elem, check_board):
-	col = sum(check_board[row_elem,:])
-	row = sum(check_board[:,column_elem])
-	return max(col, row)
+#------------------------------------
+
+# Create a text (bg is the background color of the text, fg is the foreground color)
+Label (window, text="Welcome to the ABC game", bg="black", fg="white", font ="none 12 bold").grid(row=0, column=0, sticky=W)
+
+# --------------------------------------
+
+## Create a text entry
+#textentry = Entry(window, width=20, bg="white")
+#textentry.grid(row=1, column=0, sticky=W)
+
+#---------------------------------------
+
+# Create a button
+for r in range(5):
+	for c in range(5):
+		Button (window, text=" ", width=6, height=3, command=click) .grid(row=r+1, column=c+1, sticky=W)
+
+
+
+window.mainloop()
 
 
